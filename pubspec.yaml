@@ -1,0 +1,37 @@
+name: droidkit
+description: >-
+  Set up the Android SDK, a JDK and emulators for Flutter without Android
+  Studio. One command installs, diagnoses and manages your Android toolchain.
+version: 0.1.0
+repository: https://github.com/sawongam/droidkit
+issue_tracker: https://github.com/sawongam/droidkit/issues
+topics:
+  - android
+  - flutter
+  - emulator
+  - sdk
+  - cli
+
+environment:
+  sdk: ^3.11.0
+
+executables:
+  droidkit: droidkit
+
+dependencies:
+  archive: ^4.3.0
+  args: ^2.7.0
+  cli_completion: ^0.6.0
+  crypto: ^3.0.7
+  file: ^7.0.1
+  mason_logger: ^0.3.6
+  meta: ^1.19.0
+  path: ^1.9.1
+  pub_semver: ^2.2.1
+  pub_updater: ^0.6.0
+  xml: ^7.0.1
+
+dev_dependencies:
+  lints: ^6.1.0
+  mocktail: ^1.0.5
+  test: ^1.32.0
