@@ -380,10 +380,22 @@ class Installer {
     }
     // Older cmdline-tools record acceptance here; 23+ records it during
     // package installation and ignores this call.
-    final code = await tools.licenses(acceptAll: true, onLine: _log.detail);
+    final tail = <String>[];
+    final code = await tools.licenses(
+      acceptAll: true,
+      onLine: (line) {
+        _log.detail(line);
+        final trimmed = line.trim();
+        if (trimmed.isEmpty) return;
+        tail.add(trimmed);
+        if (tail.length > 8) tail.removeAt(0);
+      },
+    );
     if (code != 0) {
       throw DroidkitException(
-        'Recording license acceptance failed (exit $code).',
+        'Recording license acceptance failed (exit $code).'
+        '${tail.isEmpty ? '' : '\n${tail.join('\n')}'}',
+        hint: 'Run again with --verbose for the full log.',
       );
     }
     ctx.licensesConsented = true;
