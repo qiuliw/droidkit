@@ -2,7 +2,6 @@
 
 [![pub package](https://img.shields.io/pub/v/droidkit.svg)](https://pub.dev/packages/droidkit)
 ![Publisher](https://img.shields.io/badge/Publisher-sawongam-blue.svg)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **The Android toolchain for Flutter, without Android Studio.**
 
