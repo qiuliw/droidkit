@@ -42,9 +42,12 @@ jobs:
         with:
           sdk: 3.12.0
       - run: dart pub downgrade
-      # The oldest frontend_server_client looks for a snapshot newer SDKs no
-      # longer ship; it only affects `dart test`, not droidkit's users.
-      - run: dart pub upgrade frontend_server_client
+      # Transitive packages whose oldest versions no longer compile on this
+      # SDK: frontend_server_client (via test) looks for a snapshot newer SDKs
+      # don't ship, platform 3.0.0 (via pub_updater → process) uses a removed
+      # API. pub never picks these for users, and our own bounds stay at
+      # their minimum.
+      - run: dart pub upgrade frontend_server_client platform
       - run: dart analyze
       - run: dart test
 
