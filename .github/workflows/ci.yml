@@ -4,11 +4,21 @@ on:
   push:
     branches: [master]
   pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
     name: Test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -21,13 +31,36 @@ jobs:
       - run: dart analyze --fatal-infos
       - run: dart test
 
+  # The oldest SDK allowed by `environment.sdk`, with every dependency at its
+  # lowest allowed version, so the lower bounds in pubspec.yaml stay honest.
+  minimum:
+    name: Test (Dart 3.11.0, downgraded deps)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.11.0
+      - run: dart pub downgrade
+      - run: dart analyze
+      - run: dart test
+
   e2e:
     name: End-to-end SDK install (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    # Windows on ARM is new territory for Google's SDK tools; report it
+    # without blocking merges.
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
+        experimental: [false]
+        include:
+          - os: windows-11-arm
+            experimental: true
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
@@ -36,16 +69,57 @@ jobs:
       - name: Install into a fresh SDK
         shell: bash
         run: |
-          if [ "$RUNNER_OS" = Windows ]; then droidkit() { droidkit.bat "$@"; }; fi
+          if [ "$RUNNER_OS" = Windows ]; then droidkit() { dart run "$GITHUB_WORKSPACE/bin/droidkit.dart" "$@"; }; fi
+          # Runners ship their own Android SDK; hide it so droidkit starts clean.
+          unset ANDROID_HOME ANDROID_SDK_ROOT
           export DROIDKIT_HOME="$RUNNER_TEMP/droidkit"
-          droidkit --yes --verbose --sdk-root "$RUNNER_TEMP/sdk" setup --no-emulator --no-persist-env --no-flutter-config
+          droidkit --yes --sdk-root "$RUNNER_TEMP/sdk" setup --no-emulator --no-persist-env --no-flutter-config
           droidkit --sdk-root "$RUNNER_TEMP/sdk" sdk list
-          droidkit --sdk-root "$RUNNER_TEMP/sdk" doctor || true
+          droidkit --sdk-root "$RUNNER_TEMP/sdk" doctor
 
-  publish-check:
+  # The real goal: a Flutter app builds against the SDK droidkit installed.
+  flutter:
+    name: Flutter build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: dart pub global activate --source path .
+      - name: Set up the SDK and build an APK
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = Windows ]; then droidkit() { dart run "$GITHUB_WORKSPACE/bin/droidkit.dart" "$@"; }; fi
+          unset ANDROID_HOME ANDROID_SDK_ROOT
+          export DROIDKIT_HOME="$RUNNER_TEMP/droidkit"
+          sdk="$RUNNER_TEMP/sdk"
+          droidkit --yes --sdk-root "$sdk" setup --no-emulator --no-persist-env
+          droidkit --sdk-root "$sdk" doctor
+
+          flutter doctor -v | tee "$RUNNER_TEMP/flutter-doctor.txt"
+          grep -q '\[✓\] Android toolchain' "$RUNNER_TEMP/flutter-doctor.txt" ||
+            { echo "::error::flutter doctor does not accept the Android toolchain"; exit 1; }
+
+          cd "$RUNNER_TEMP"
+          flutter create --platforms=android ci_app
+          cd ci_app
+          flutter build apk --debug
+
+  package:
+    name: Package checks
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
       - run: dart pub get
       - run: dart pub publish --dry-run
+      - run: dart pub global activate pana
+      # Fails when the pub.dev score would drop by more than 10 points.
+      - run: pana --no-warning --exit-code-threshold 10 .
