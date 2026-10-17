@@ -35,17 +35,18 @@ class ProcessRunner {
 
   /// Makes [arguments] survive `cmd.exe` when running a `.bat` file.
   ///
-  /// cmd splits batch arguments on `;`, `,` and `=`, so `platforms;android-36`
-  /// would reach sdkmanager as two arguments. Dart only quotes arguments that
-  /// contain spaces, tabs or quotes, so quote the rest ourselves (quoting an
-  /// argument Dart will also quote would double-escape it).
+  /// The SDK scripts forward `%*` untouched, so `;`, `,` and `=` (as in
+  /// `platforms;android-36` or `--sdk_root=C:\Sdk`) need no help. Quoting
+  /// them ourselves breaks things: with `runInShell` Dart turns every `"`
+  /// into `\"`, which reaches sdkmanager as literal characters. What cmd
+  /// itself would interpret (`&|<>^()`) is caret-escaped instead, unless
+  /// Dart already wraps the argument in quotes (it has spaces or tabs).
   static List<String> cmdSafeArguments(List<String> arguments) => [
     for (final arg in arguments)
-      if (!arg.contains(RegExp(r'[ \t"]')) &&
-          arg.contains(RegExp(r'[;,=&|<>^()]')))
-        '"$arg"'
+      if (arg.contains(RegExp(r'[ \t"]')))
+        arg
       else
-        arg,
+        arg.replaceAllMapped(RegExp(r'[&|<>^()]'), (m) => '^${m[0]}'),
   ];
 
   static List<String> _args(String executable, List<String> arguments) =>

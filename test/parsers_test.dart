@@ -81,17 +81,20 @@ All Settings:
   });
 
   test('cmd-safe arguments for .bat files', () {
+    // The scripts forward %*, so ; and = pass through as-is; adding quotes
+    // would reach sdkmanager as \" once Dart escapes them for cmd.
     expect(
       ProcessRunner.cmdSafeArguments(['--install', 'platforms;android-36']),
-      ['--install', '"platforms;android-36"'],
-    );
-    // Dart already quotes arguments with spaces; don't double-quote.
-    expect(
-      ProcessRunner.cmdSafeArguments([r'--sdk_root=C:\Users\Jo Doe\Sdk']),
-      [r'--sdk_root=C:\Users\Jo Doe\Sdk'],
+      ['--install', 'platforms;android-36'],
     );
     expect(ProcessRunner.cmdSafeArguments([r'--sdk_root=C:\Sdk']), [
-      r'"--sdk_root=C:\Sdk"',
+      r'--sdk_root=C:\Sdk',
     ]);
+    // Dart already quotes arguments with spaces; leave them alone.
+    expect(
+      ProcessRunner.cmdSafeArguments([r'--sdk_root=C:\Users\Jo & Doe\Sdk']),
+      [r'--sdk_root=C:\Users\Jo & Doe\Sdk'],
+    );
+    expect(ProcessRunner.cmdSafeArguments([r'C:\R&D\Sdk']), [r'C:\R^&D\Sdk']);
   });
 }
