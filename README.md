@@ -1,15 +1,16 @@
 # droidkit
 
 [![pub package](https://img.shields.io/pub/v/droidkit.svg)](https://pub.dev/packages/droidkit)
+[![CI](https://github.com/sawongam/droidkit/actions/workflows/ci.yml/badge.svg)](https://github.com/sawongam/droidkit/actions/workflows/ci.yml)
 ![Publisher](https://img.shields.io/badge/Publisher-sawongam-blue.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**Install the Android SDK, JDK and emulator for Flutter from the command line — no Android Studio needed.**
+**The Android toolchain for Flutter, without Android Studio.**
 
-droidkit is a cross-platform CLI (Linux, macOS, Windows) that sets up everything
-Flutter needs to build and run Android apps: JDK, Android SDK command-line
-tools, platforms, build-tools, licenses, emulator and virtual devices. It wires
-them into Flutter and your shell, and `droidkit doctor --fix` repairs broken
-setups.
+droidkit is a cross-platform CLI (Linux, macOS, Windows) that installs and
+manages the JDK, Android SDK, build tools, licenses, emulator and virtual
+devices Flutter needs, wires them into Flutter and your shell, and repairs
+broken setups.
 
 ```sh
 dart pub global activate droidkit
@@ -18,6 +19,15 @@ droidkit setup
 
 A few minutes later `flutter doctor` shows a green Android toolchain and
 `droidkit start` boots an emulator.
+
+| You need | Run |
+| --- | --- |
+| Everything installed, from scratch | `droidkit setup` |
+| To find out what's broken, and fix it | `droidkit doctor --fix` |
+| An emulator | `droidkit start` |
+| Android SDK on CI | `droidkit --yes setup --no-emulator` |
+| A JDK that won't touch your system Java | `droidkit jdk install` |
+| `ANDROID_HOME` and `PATH` in your shell | `droidkit env --persist` |
 
 ## Why droidkit
 
