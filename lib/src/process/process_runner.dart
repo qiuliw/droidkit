@@ -150,7 +150,15 @@ class ProcessRunner {
     pipe(process.stderr, stderr);
     if (autoAnswer != null) {
       // Answer every prompt; the process exits once it has what it needs.
-      final timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
+      Timer? timer;
+      // A write into a pipe the process already closed fails asynchronously
+      // on `done`, not in writeln; unobserved, it would crash droidkit.
+      unawaited(
+        process.stdin.done.catchError((Object _) {
+          timer?.cancel();
+        }),
+      );
+      timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
         try {
           process.stdin.writeln(autoAnswer);
         } on Object {
