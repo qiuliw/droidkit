@@ -1,7 +1,6 @@
 # droidkit
 
 [![pub package](https://img.shields.io/pub/v/droidkit.svg)](https://pub.dev/packages/droidkit)
-[![CI](https://github.com/sawongam/droidkit/actions/workflows/ci.yml/badge.svg)](https://github.com/sawongam/droidkit/actions/workflows/ci.yml)
 ![Publisher](https://img.shields.io/badge/Publisher-sawongam-blue.svg)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
