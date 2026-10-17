@@ -1,8 +1,7 @@
 # droidkit
 
 [![pub package](https://img.shields.io/pub/v/droidkit.svg)](https://pub.dev/packages/droidkit)
-[![CI](https://github.com/sawongam/droidkit/actions/workflows/ci.yml/badge.svg)](https://github.com/sawongam/droidkit/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Publisher](https://img.shields.io/badge/Publisher-sawongam-blue.svg)
 
 **Install the Android SDK, JDK and emulator for Flutter from the command line — no Android Studio needed.**
 
