@@ -36,6 +36,7 @@ jobs:
       - name: Install into a fresh SDK
         shell: bash
         run: |
+          if [ "$RUNNER_OS" = Windows ]; then droidkit() { droidkit.bat "$@"; }; fi
           export DROIDKIT_HOME="$RUNNER_TEMP/droidkit"
           droidkit --yes --sdk-root "$RUNNER_TEMP/sdk" setup --no-emulator --no-persist-env --no-flutter-config
           droidkit --sdk-root "$RUNNER_TEMP/sdk" sdk list
