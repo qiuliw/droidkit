@@ -39,11 +39,10 @@ class DroidkitCommandRunner extends CompletionCommandRunner<int> {
   /// Creates a [DroidkitCommandRunner].
   DroidkitCommandRunner({
     Logger? logger,
-    ProcessRunner processRunner = const ProcessRunner(),
+    this._processRunner = const ProcessRunner(),
     PubUpdater? pubUpdater,
     Map<String, String>? environment,
   }) : _logger = logger ?? Logger(),
-       _processRunner = processRunner,
        _pubUpdater = pubUpdater ?? PubUpdater(),
        _environment = environment ?? Platform.environment,
        super(
