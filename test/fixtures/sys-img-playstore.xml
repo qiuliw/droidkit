@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+ * Copyright (C) 2009 The Android Open Source Project
+ *
+ * Licensed under the Apache License, version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<sys-img:sdk-sys-img xmlns:sys-img="http://schemas.android.com/sdk/android/repo/sys-img2/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <license id="android-sdk-license" type="text">Terms and Conditions
+
+This is the Android Software Development Kit License Agreement
+
+1. Introduction
+
+1.1 The Android S
+...</license>
+<license id="android-sdk-preview-license" type="text">To get started with the Android SDK Preview, you must agree to the following terms and conditions.
+As described below, p
+...</license>
+<license id="intel-android-sysimage-license" type="text">Intel Corporation Internal Evaluation License Agreement for x86 Android* System Images for Android Software Development 
+...</license>
+<license id="mips-android-sysimage-license" type="text">MIPS Technologies, Inc. (“MIPS”) Internal Evaluation License Agreement for MIPS Android™ System Images for Android Softw
+...</license>
+<license id="android-googletv-license" type="text">Terms and Conditions
+
+This is the Google TV Add-on for the Android Software Development Kit License Agreement.
+
+1. Intro
+...</license>
+<license id="android-googlexr-license" type="text">To get started with the Android XR Emulator System Image SDK, you must agree to the following terms and conditions. As d
+...</license>
+<license id="android-sdk-arm-dbt-license" type="text">Terms and Conditions
+
+This is the Android Software Development Kit License Agreement
+
+1. Introduction
+
+1.1 The Android S
+...</license>
+<license id="microxr-sysimage-license" type="text">To get started with the microXR Emulator System Image SDK, you must agree to the following terms and conditions. As desc
+...</license>
+<channel id="channel-0">stable</channel>
+<channel id="channel-1">beta</channel>
+<channel id="channel-2">dev</channel>
+<channel id="channel-3">canary</channel>
+<remotePackage path="system-images;android-CANARY;google_apis_playstore_ps16k;x86_64">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>37.1</api-level>
+      <codename>CANARY</codename>
+      <extension-level>23</extension-level>
+      <base-extension>true</base-extension>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google APIs PlayStore</display>
+      </tag>
+      <tag>
+        <id>page_size_16kb</id>
+        <display>Page Size 16KB</display>
+      </tag>
+      <tag>
+        <id>ai_glasses_compatible</id>
+        <display>AI Glasses Compatible</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>x86_64</abi>
+    </type-details>
+    <revision>
+      <major>15</major>
+    </revision>
+    <display-name>16 KB Page Size Google Play Intel x86_64 Atom System Image</display-name>
+    <uses-license ref="android-sdk-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>36</major>
+          <minor>5</minor>
+          <micro>11</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>2305263192</size>
+          <checksum type="sha1">406ff718e3c3a2ca03b8a0621317b314f407e847</checksum>
+          <url>x86_64-playstore-ps16k-CANARY_r15.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+<remotePackage path="system-images;android-36-ext19;google_apis_playstore;x86_64">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>36x</api-level>
+      <extension-level>19</extension-level>
+      <base-extension>false</base-extension>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google Play</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>x86_64</abi>
+    </type-details>
+    <revision>
+      <major>1</major>
+    </revision>
+    <display-name>Google Play Intel x86_64 Atom System Image</display-name>
+    <uses-license ref="android-sdk-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>35</major>
+          <minor>4</minor>
+          <micro>9</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>1927713707</size>
+          <checksum type="sha1">68739f41080957209a4a34e1a2e65186d449776f</checksum>
+          <url>x86_64-36-ext19_r01.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+<remotePackage path="system-images;android-36;google_apis_playstore;arm64-v8a">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>36</api-level>
+      <extension-level>17</extension-level>
+      <base-extension>true</base-extension>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google Play</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>arm64-v8a</abi>
+    </type-details>
+    <revision>
+      <major>7</major>
+    </revision>
+    <display-name>Google Play ARM 64 v8a System Image</display-name>
+    <uses-license ref="android-sdk-arm-dbt-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>35</major>
+          <minor>4</minor>
+          <micro>9</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>1886527965</size>
+          <checksum type="sha1">5b91ef80a5eb60d7b7167528db259c2a12d20e9c</checksum>
+          <url>arm64-v8a-36_r07.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+<remotePackage path="system-images;android-36;google_apis_playstore;x86_64">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>36</api-level>
+      <extension-level>17</extension-level>
+      <base-extension>true</base-extension>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google Play</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>x86_64</abi>
+    </type-details>
+    <revision>
+      <major>7</major>
+    </revision>
+    <display-name>Google Play Intel x86_64 Atom System Image</display-name>
+    <uses-license ref="android-sdk-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>35</major>
+          <minor>4</minor>
+          <micro>9</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>1924689206</size>
+          <checksum type="sha1">16fa3c441d29fde6c9eea2f766eecf77032d68b4</checksum>
+          <url>x86_64-36_r07.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+<remotePackage path="system-images;android-36;google_apis_playstore_ps16k;x86_64">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>36</api-level>
+      <extension-level>17</extension-level>
+      <base-extension>true</base-extension>
+      <tag>
+        <id>page_size_16kb</id>
+        <display>16 KB Page Size</display>
+      </tag>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google APIs PlayStore</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>x86_64</abi>
+    </type-details>
+    <revision>
+      <major>7</major>
+    </revision>
+    <display-name>16 KB Page Size Google Play Intel x86_64 Atom System Image</display-name>
+    <uses-license ref="android-sdk-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>35</major>
+          <minor>4</minor>
+          <micro>9</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>1937396599</size>
+          <checksum type="sha1">3814a7b029c3b8aa0a9c8f110459f412a20882e7</checksum>
+          <url>x86_64-playstore-ps16k-36_r07.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+<remotePackage path="system-images;android-35;google_apis_playstore;x86_64">
+    <type-details xsi:type="sys-img:sysImgDetailsType">
+      <api-level>35</api-level>
+      <extension-level>13</extension-level>
+      <base-extension>true</base-extension>
+      <tag>
+        <id>google_apis_playstore</id>
+        <display>Google Play</display>
+      </tag>
+      <vendor>
+        <id>google</id>
+        <display>Google Inc.</display>
+      </vendor>
+      <abi>x86_64</abi>
+    </type-details>
+    <revision>
+      <major>9</major>
+    </revision>
+    <display-name>Google Play Intel x86_64 Atom System Image</display-name>
+    <uses-license ref="android-sdk-license"/>
+    <dependencies>
+      <dependency path="emulator">
+        <min-revision>
+          <major>33</major>
+          <minor>1</minor>
+          <micro>24</micro>
+        </min-revision>
+      </dependency>
+    </dependencies>
+    <channelRef ref="channel-0"/>
+    <archives>
+      <archive>
+        <complete>
+          <size>1762061559</size>
+          <checksum type="sha1">2f0054868e6aab3c098acd3decba17a82aed4176</checksum>
+          <url>x86_64-35_r09.zip</url>
+        </complete>
+      </archive>
+    </archives>
+  </remotePackage>
+</sys-img:sdk-sys-img>
