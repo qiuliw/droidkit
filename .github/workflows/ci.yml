@@ -42,6 +42,9 @@ jobs:
         with:
           sdk: 3.12.0
       - run: dart pub downgrade
+      # The oldest frontend_server_client looks for a snapshot newer SDKs no
+      # longer ship; it only affects `dart test`, not droidkit's users.
+      - run: dart pub upgrade frontend_server_client
       - run: dart analyze
       - run: dart test
 
@@ -136,7 +139,8 @@ jobs:
           droidkit --sdk-root "$sdk" doctor
 
           flutter doctor -v | tee "$RUNNER_TEMP/flutter-doctor.txt"
-          grep -q '\[✓\] Android toolchain' "$RUNNER_TEMP/flutter-doctor.txt" ||
+          # Windows prints [√] instead of [✓].
+          grep -Eq '\[(✓|√)\] Android toolchain' "$RUNNER_TEMP/flutter-doctor.txt" ||
             { echo "::error::flutter doctor does not accept the Android toolchain"; exit 1; }
 
           cd "$RUNNER_TEMP"
